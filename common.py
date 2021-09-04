@@ -2,6 +2,8 @@ import collections
 
 Results = collections.namedtuple("Results", ["blackPins", "whitePins"])
 
+CONFIG_FILE = "./conf/token.conf"
+
 def findCorrectMatch (current, guess):
     """
         Returns the sum of matching pins
