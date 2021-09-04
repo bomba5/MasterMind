@@ -4,6 +4,7 @@ Results = collections.namedtuple("Results", ["blackPins", "whitePins"])
 
 CONFIG_FILE = "./conf/token.conf"
 
+
 def findCorrectMatch (current, guess):
     """
         Returns the sum of matching pins
@@ -30,3 +31,28 @@ def findCloseMatch (current, guess):
 
     # Return number of close matches
     return close
+
+
+def validateUserGuess (userGuess):
+    """
+        Validate user input:
+        Input should be 4 digits in range 0-5.
+        Return None if rules are broken.
+    """
+    resGuess = []
+
+    for digit in userGuess:
+        if digit.isdigit():
+            if int (digit) in range (6):
+                resGuess.append (int (digit))
+            else:
+                resGuess = None
+                break
+        else:
+            resGuess = None
+            break
+
+    if resGuess and len (resGuess) != 4:
+        resGuess = None
+
+    return resGuess

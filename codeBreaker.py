@@ -5,18 +5,36 @@ from common import Results, findCorrectMatch, findCloseMatch
 
 class CodeBreaker:
 
-    def __init__ (self, ctx):
+    def __init__ (self):
         """
+            Empty contructor
+        """
+
+
+    def newGame (self, ctx):
+        """
+            Initialize new game
         """
         # Get the current game context
         self.game = ctx
+
+        self.guessNumber = 0
+
+        # Calculate Cartesian product for 4 numbers in range 0-6
+        # representing all the possible combinations
+        self.possibleAnswers = list (
+                itertools.product (*[range (6) for _ in range (4)])
+                )
+
+        # This will be my opening guess
+        self.myGuess = [0, 0, 1, 1]
 
 
     def guessResult (self, guess, possibleAnswer, result):
         """
             Returns true if passed result matches possible answer results
         """
-        
+
         # If computed results matches current result, return true
         return result == Results (
                 findCorrectMatch (possibleAnswer, guess),
@@ -44,7 +62,6 @@ class CodeBreaker:
         # For each answer in possible answers, calculate the length
         # of the remaining possible answers list.
         # Choose the answer which generates the shortest remaining list.
-        # This is a sketchy MinMax algorithm.
         for answer in possibleAnswers:
             currentLength = len (
                     list (self.filterPossible (answer, possibleAnswers, result))
@@ -57,26 +74,51 @@ class CodeBreaker:
         return nextGuess
 
 
+    def nextMove (self, guessResult):
+        """
+            Define next move for the Telegram game.
+            Part of this code is also present in the following
+            original Play function.
+        """
+        if (self.guessNumber != 0):
+            # Filters the possible answers removing the current guess
+            # and the other imbossible ones
+            self.possibleAnswers = list (
+                    self.filterPossible (
+                        self.myGuess, self.possibleAnswers, guessResult)
+                    )
+
+            # Compute the new guess
+            self.myGuess = self.guessAnswer (self.possibleAnswers, guessResult)
+
+        self.guessNumber += 1
+
+        return self.myGuess
+
+
     def play (self):
         """
+            Play a solo game:
+            CodeBreaker will find the solution.
+            Not suitable for Telegram Wrapping.
         """
-        guessNumber = 0
+        self.guessNumber = 0
 
         # Calculate Cartesian product for 4 numbers in range 0-6
         # representing all the possible combinations
-        possibleAnswers = list (
+        self.possibleAnswers = list (
                 itertools.product (*[range (6) for _ in range (4)])
                 )
 
         # This will be my opening guess
-        myGuess = [0, 0, 1, 1]
+        self.myGuess = [0, 0, 1, 1]
 
-        while (guessNumber < 10):
+        while (self.guessNumber < 10):
             print ("#{} CodeBreaker - guessing: {}".format (
-                (guessNumber + 1), myGuess))
+                (self.guessNumber + 1), self.myGuess))
 
             # Collect the current guess results
-            guessResult = self.game.checkGuess (myGuess)
+            guessResult = self.game.checkGuess (self.myGuess)
 
             # Element 0 contains the count of black pins
             # if 4, we won
@@ -85,11 +127,12 @@ class CodeBreaker:
 
             # Filters the possible answers removing the current guess
             # and the other imbossible ones
-            possibleAnswers = list (
-                    self.filterPossible (myGuess, possibleAnswers, guessResult)
+            self.possibleAnswers = list (
+                    self.filterPossible (
+                        self.myGuess, self.possibleAnswers, guessResult)
                     )
 
             # Compute the new guess
-            myGuess = self.guessAnswer (possibleAnswers, guessResult)
+            self.myGuess = self.guessAnswer (self.possibleAnswers, guessResult)
 
-            guessNumber += 1
+            self.guessNumber += 1

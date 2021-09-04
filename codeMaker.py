@@ -7,9 +7,8 @@ class CodeMaker:
 
     def __init__ (self):
         """
+            Empty constructor
         """
-        self.gameCode = list (random.choice (range (6)) for _ in range (4))
-        print ("-- CodeMaker - generated code: {}".format (self.gameCode))
 
 
     def checkGuess (self, guess):
@@ -26,3 +25,11 @@ class CodeMaker:
             print ("-- CodeMaker - Masterminded!!!")
 
         return Results (blackPins, whitePins)
+
+
+    def newGame (self):
+        """
+            Initialize game code
+        """
+        self.gameCode = list (random.choice (range (6)) for _ in range (4))
+        print ("-- CodeMaker - generated code: {}".format (self.gameCode))
