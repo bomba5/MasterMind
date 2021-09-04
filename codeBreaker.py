@@ -12,16 +12,19 @@ class CodeBreaker:
         self.game = ctx
 
 
-    def findCorrectMatch (self, actual, guess):
+    def findCorrectMatch (self, current, guess):
         """
-            Finds the sum of matched pins
+            Returns the sum of matching pins
         """
-        return sum ([1 for (a, b) in zip (actual, guess) if a == b])
+
+        # Just the total of matching pins
+        return sum ([1 for (a, b) in zip (current, guess) if a == b])
 
 
     def findCloseMatch (self, current, guess):
         """
-            Finds the sum of mismatched but present pins
+            Finds the sum of mismatched but present pins in
+            current and possible next move
         """
         close = 0
 
@@ -34,13 +37,16 @@ class CodeBreaker:
                 del l_current[l_current.index(possible)]
                 close += 1
 
+        # Return number of close matches
         return close
 
 
-    def match (self, guess, possibleAnswer, result):
+    def guessResult (self, guess, possibleAnswer, result):
         """
             Returns true if passed result matches possible answer results
         """
+        
+        # If computed results matches current result, return true
         return result == Results (
                 self.findCorrectMatch (possibleAnswer, guess),
                 self.findCloseMatch (possibleAnswer, guess)
@@ -49,11 +55,12 @@ class CodeBreaker:
 
     def filterPossible (self, guess, possibleAnswers, result):
         """
-            Iterates throught possible pool and removes impossible answers
+            Iterates throught possible pool and yeld improving answers
         """
         for answer in possibleAnswers:
-            if self.match (guess, answer, result) and (answer != guess):
+            if self.guessResult (guess, answer, result) and (answer != guess):
                 yield answer
+            # else: Discarding answer
 
 
     def guessAnswer (self, possibleAnswers, result):
@@ -63,6 +70,10 @@ class CodeBreaker:
         minLength = float ('infinity')
         nextGuess = None
 
+        # For each answer in possible answers, calculate the length
+        # of the remaining possible answers list.
+        # Choose the answer which generates the shortest remaining list.
+        # This is a sketchy MinMax algorithm.
         for answer in possibleAnswers:
             currentLength = len (
                     list (self.filterPossible (answer, possibleAnswers, result))
