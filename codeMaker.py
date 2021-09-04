@@ -1,6 +1,7 @@
 import random, collections
 
-from common import Results
+from common import Results, findCorrectMatch, findCloseMatch
+
 
 class CodeMaker:
 
@@ -16,24 +17,10 @@ class CodeMaker:
             Returns Results type containing feedback of black and
             white pins
         """
-        blackPins = 0
-        whitePins = 0
-        wrongGuessElements = []
-        wrongAnswerElements = []
-
         print ("-- CodeMaker - checking against: {}".format (self.gameCode))
 
-        for guessElement, answerElement in zip (guess, self.gameCode):
-            if guessElement == answerElement:
-                blackPins += 1
-            else:
-                wrongGuessElements.append (guessElement)
-                wrongAnswerElements.append (answerElement)
-
-        for wrongGuess in wrongGuessElements:
-            if wrongGuess in wrongAnswerElements:
-                wrongAnswerElements.remove (wrongGuess)
-                whitePins += 1
+        blackPins = findCorrectMatch (self.gameCode, guess)
+        whitePins = findCloseMatch (self.gameCode, guess)
 
         if (blackPins == 4):
             print ("-- CodeMaker - Masterminded!!!")
