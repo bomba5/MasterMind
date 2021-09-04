@@ -1,6 +1,7 @@
 ## MasterMind
 
 [![YouTube demo](https://i.imgur.com/YfRuPOZ.png)](https://www.youtube.com/watch?v=5F2OB59lLmg "YouTube demo")
+[*Click for YouTube demo*](https://www.youtube.com/watch?v=5F2OB59lLmg)
 
 #### What is this MasterMind repo?
 This is a sketchy implementation for both CodeMaker and CodeBreaker side.
