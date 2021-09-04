@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 
-import random
-
-from common import result_t
 from codeMaker import CodeMaker
+from codeBreaker import CodeBreaker
 
 if __name__ == "__main__":
+    # Init the game
+    game = CodeMaker ()
 
-    myGuess = list (random.choice ("BRYVOG") for _ in range (4))
-    loop = CodeMaker()
+    # Init the player, while passing the current game
+    player = CodeBreaker (game)
 
-    print (loop._gameCode)
-    print (myGuess)
-    print (loop.checkGuess (myGuess))
+    # Let him play
+    player.play ()
+

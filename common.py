@@ -1,4 +1,3 @@
-result_t = {
-        "BLACK": 0,
-        "WHITE": 0
-        }
+import collections
+
+Results = collections.namedtuple("Results", ["blackPins", "whitePins"])

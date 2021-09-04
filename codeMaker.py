@@ -1,26 +1,31 @@
-#!/usr/bin/env python3
+import random, collections
 
-from common import result_t
-import random
+from common import Results
 
 class CodeMaker:
 
     def __init__ (self):
         """
         """
-        self._gameCode = list (random.choice ("BRYVOG") for _ in range (4))
+        self.gameCode = list (random.choice (range (6)) for _ in range (4))
+        print ("-- CodeMaker - generated code: {}".format (self.gameCode))
 
 
     def checkGuess (self, guess):
         """
+            Returns Results type containing feedback of black and
+            white pins
         """
-        result = result_t
+        blackPins = 0
+        whitePins = 0
         wrongGuessElements = []
         wrongAnswerElements = []
 
-        for guessElement, answerElement in zip (guess, self._gameCode):
+        print ("-- CodeMaker - checking against: {}".format (self.gameCode))
+
+        for guessElement, answerElement in zip (guess, self.gameCode):
             if guessElement == answerElement:
-                result["BLACK"] += 1
+                blackPins += 1
             else:
                 wrongGuessElements.append (guessElement)
                 wrongAnswerElements.append (answerElement)
@@ -28,6 +33,9 @@ class CodeMaker:
         for wrongGuess in wrongGuessElements:
             if wrongGuess in wrongAnswerElements:
                 wrongAnswerElements.remove (wrongGuess)
-                result["WHITE"] += 1
+                whitePins += 1
 
-        return result
+        if (blackPins == 4):
+            print ("-- CodeMaker - Masterminded!!!")
+
+        return Results (blackPins, whitePins)
