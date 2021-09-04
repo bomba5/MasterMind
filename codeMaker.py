@@ -16,7 +16,8 @@ class CodeMaker:
             Returns Results type containing feedback of black and
             white pins
         """
-        print ("-- CodeMaker - checking against: {}".format (self.gameCode))
+        print ("-- CodeMaker - checking solution: {}".format (guess))
+        print ("-- CodeMaker - against gameCode:  {}".format (self.gameCode))
 
         blackPins = findCorrectMatch (self.gameCode, guess)
         whitePins = findCloseMatch (self.gameCode, guess)
