@@ -4,7 +4,7 @@ Results = collections.namedtuple("Results", ["blackPins", "whitePins"])
 
 def findCorrectMatch (current, guess):
     """
-    Returns the sum of matching pins
+        Returns the sum of matching pins
     """
 
     # Just the total of matching pins
@@ -13,7 +13,7 @@ def findCorrectMatch (current, guess):
 
 def findCloseMatch (current, guess):
     """
-    Finds the sum of mismatched but present pins
+        Finds the sum of mismatched but present pins
     """
     close = 0
 
