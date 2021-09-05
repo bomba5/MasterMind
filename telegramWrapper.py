@@ -34,6 +34,19 @@ class TelegramWrapper:
         update.message.reply_text(
                 "Type /auto to watch CodeBreaker win a MasterMind game"
                 )
+        update.message.reply_text(
+                "Goal of the /play game is to find the right combination of " \
+                "four numbers from zero to five. If a number is correct and " \
+                "in the correct position, you will get one 'black'; If a " \
+                "number is present but in a different postion, you will get " \
+                "a 'white'."
+                )
+        update.message.reply_text(
+                "When in mode /auto, codeMaker will generate and show a " \
+                "combination of four numbers from zero to fiven, and then " \
+                "the codeBreaker algorithm will try to find it in the " \
+                "shortest number of attempts."
+                )
 
 
     def commandPlay (self, update, context):
