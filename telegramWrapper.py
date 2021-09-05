@@ -43,7 +43,7 @@ class TelegramWrapper:
                 )
         update.message.reply_text(
                 "When in mode /auto, codeMaker will generate and show a " \
-                "combination of four numbers from zero to fiven, and then " \
+                "combination of four numbers from zero to five, and then " \
                 "the codeBreaker algorithm will try to find it in the " \
                 "shortest number of attempts."
                 )
