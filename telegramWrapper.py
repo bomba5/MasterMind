@@ -3,7 +3,6 @@ from telegram.ext import Filters, CallbackQueryHandler
 from telegram.ext.dispatcher import run_async
 
 from common import CONFIG_FILE, validateUserGuess
-from codeBreaker import CodeBreaker
 
 
 class TelegramWrapper:
@@ -46,9 +45,6 @@ class TelegramWrapper:
 
         # Init new MasterMind game
         self.game.newGame ()
-
-        # Init new MasterMind codeBreaker bot
-        self.breaker.newGame (self.game)
 
         update.message.reply_text("Started new MasterMind game")
         update.message.reply_text("Input 4 numbers (0-5)")
