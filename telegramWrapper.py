@@ -117,7 +117,8 @@ class TelegramWrapper:
                     update.message.text))
                 update.message.reply_text("Input 4 numbers (0-5)")
         else:
-            update.message.reply_text("Game not started yet")
+            update.message.reply_text("Game not started yet!")
+            update.message.reply_text("Type /start to... start.")
 
 
     def loop (self):
